@@ -18,23 +18,27 @@ const timeout = function (s) {
 
 const controlRecipe = async function (id) {
   try {
+    const id = window.location.hash.slice(1);
+
+    if (!id) return;
     // RENDER THE SPINNER
     recipeView.renderSpinner();
 
     // LOAD DATA INTO RECIPE OBJECT
-    await model.loadRecipe('5ed6604591c37cdc054bc886');
+    await model.loadRecipe(id);
 
     console.log(model.state.recipe);
 
     // SEND LOADED DATA TO VIEW TO RENDER
     recipeView.render(model.state.recipe);
   } catch (error) {
-    throw error;
+    recipeView.renderError();
+    console.log(error);
   }
 };
 
 const init = function () {
-  controlRecipe();
+  recipeView.addHandlerRender(controlRecipe);
 };
 
 init();

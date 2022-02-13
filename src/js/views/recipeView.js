@@ -5,6 +5,10 @@ class RecipeView extends View {
   _parentElement = document.querySelector('.recipe');
   _errorMessage = `Sorry we couldn't Find this Recipe ! please Try Again`;
 
+  addHandlerRender(handler) {
+    ['load', 'hashchange'].forEach(ev => window.addEventListener(ev, handler));
+  }
+
   _generateMarkup() {
     return `<figure class="recipe__fig">
     <img src="${this._data.image}" alt="Tomato" class="recipe__img" />
