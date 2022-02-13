@@ -11,6 +11,10 @@ const timeout = function (s) {
 
 export const state = {
   recipe: {},
+  search: {
+    query: '',
+    result: [],
+  },
 };
 
 const createRecipeObject = function (data) {
@@ -38,3 +42,19 @@ export const loadRecipe = async function (id) {
     throw error;
   }
 };
+
+export const loadSearchResult = async function (query) {
+  try {
+    state.search.query = query;
+
+    const fetchPromise = fetch(`${API_URL}?search=${query}`);
+    const res = await Promise.race([fetchPromise, timeout(TIME_OUT_SEC)]);
+    const data = await res.json();
+
+    state.search.result = data.data.recipes;
+  } catch (error) {
+    throw error;
+  }
+};
+
+console.log(state);
