@@ -1,6 +1,8 @@
 // import { async } from 'regenerator-runtime';
 import { API_URL } from './config';
 import { TIME_OUT_SEC } from './config';
+import { RESULT_PER_PAGE } from './config';
+
 const timeout = function (s) {
   return new Promise(function (_, reject) {
     setTimeout(function () {
@@ -14,6 +16,8 @@ export const state = {
   search: {
     query: '',
     result: [],
+    page: 1,
+    resultPerPage: RESULT_PER_PAGE,
   },
 };
 
@@ -64,6 +68,12 @@ export const loadSearchResult = async function (query) {
   } catch (error) {
     throw error;
   }
+};
+
+export const getSearchResultPage = function (page) {
+  const start = (page - 1) * RESULT_PER_PAGE;
+  const end = page * RESULT_PER_PAGE;
+  return state.search.result.slice(start, end);
 };
 
 console.log(state);
