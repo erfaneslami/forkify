@@ -1,5 +1,13 @@
 // import { async } from 'regenerator-runtime';
 import { API_URL } from './config';
+import { TIME_OUT_SEC } from './config';
+const timeout = function (s) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error(`Request took too long! Timeout after ${s} second`));
+    }, s * 1000);
+  });
+};
 
 export const state = {
   recipe: {},
@@ -21,7 +29,8 @@ const createRecipeObject = function (data) {
 
 export const loadRecipe = async function (id) {
   try {
-    const res = await fetch(`${API_URL}${id}`);
+    const fetchPromise = fetch(`${API_URL}${id}`);
+    const res = await Promise.race([fetchPromise, timeout(TIME_OUT_SEC)]);
     const data = await res.json();
 
     state.recipe = createRecipeObject(data);
