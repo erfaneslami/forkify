@@ -18,12 +18,18 @@ const timeout = function (s) {
 
 const controlRecipe = async function (id) {
   try {
+    // RENDER THE SPINNER
+    recipeView.renderSpinner();
+
+    // LOAD DATA INTO RECIPE OBJECT
     await model.loadRecipe('5ed6604591c37cdc054bc886');
 
     console.log(model.state.recipe);
+
+    // SEND LOADED DATA TO VIEW TO RENDER
     recipeView.render(model.state.recipe);
   } catch (error) {
-    console.log(error);
+    throw error;
   }
 };
 

@@ -1,13 +1,13 @@
 import icons from '../../img/icons.svg';
 
 export class View {
-  #data;
+  _data;
 
   render(data) {
     if (!data || (Array.isArray(data) && data.length === 0))
       return this.renderError();
 
-    this.#data = data;
+    this._data = data;
     const markup = this._generateMarkup();
 
     this.#clear();
