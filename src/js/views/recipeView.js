@@ -1,23 +1,12 @@
 import icons from '../../img/icons.svg';
+import { View } from './View';
 
-class RecipeView {
-  #parentElement = document.querySelector('.recipe');
-  #data;
+class RecipeView extends View {
+  _parentElement = document.querySelector('.recipe');
 
-  render(data) {
-    this.#data = data;
-    const markup = this.#generateMarkup();
+  _errorMessage = `Sorry we couldn't Find this Recipe ! please Try Again`;
 
-    console.log(icons);
-    this.#clear();
-    this.#parentElement.insertAdjacentHTML('afterbegin', markup);
-  }
-
-  #clear() {
-    this.#parentElement.innerHTML = '';
-  }
-
-  #generateMarkup() {
+  _generateMarkup() {
     return `<figure class="recipe__fig">
     <img src="src/img/test-1.jpg" alt="Tomato" class="recipe__img" />
     <h1 class="recipe__title">
