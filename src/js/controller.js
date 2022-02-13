@@ -1,5 +1,5 @@
 import * as model from './model';
-
+import recipeView from './views/recipeView';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
@@ -16,8 +16,22 @@ const timeout = function (s) {
   });
 };
 
-model.loadRecipe('5ed6604591c37cdc054bc886');
+const controlRecipe = async function (id) {
+  try {
+    await model.loadRecipe('5ed6604591c37cdc054bc886');
 
+    console.log(model.state.recipe);
+    recipeView.render(model.state.recipe);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const init = function () {
+  controlRecipe();
+};
+
+init();
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
