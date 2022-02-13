@@ -51,7 +51,16 @@ export const loadSearchResult = async function (query) {
     const res = await Promise.race([fetchPromise, timeout(TIME_OUT_SEC)]);
     const data = await res.json();
 
-    state.search.result = data.data.recipes;
+    if (data.results === 0) throw new Error();
+    state.search.result = data.data.recipes.map(recipe => {
+      return {
+        id: recipe.id,
+        title: recipe.title,
+        publisher: recipe.publisher,
+        image: recipe.image_url,
+        ...(recipe.key && { key: recipe.key }),
+      };
+    });
   } catch (error) {
     throw error;
   }
