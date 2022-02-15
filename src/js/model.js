@@ -70,7 +70,9 @@ export const loadSearchResult = async function (query) {
   }
 };
 
-export const getSearchResultPage = function (page) {
+export const getSearchResultPage = function (page = state.search.page) {
+  state.search.page = page;
+
   const start = (page - 1) * RESULT_PER_PAGE;
   const end = page * RESULT_PER_PAGE;
   return state.search.result.slice(start, end);
