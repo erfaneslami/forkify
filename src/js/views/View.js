@@ -15,6 +15,35 @@ export class View {
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
   }
 
+  update(data) {
+    this._data = data;
+    const newMarkUp = this._generateMarkup();
+
+    const newDom = document.createRange().createContextualFragment(newMarkUp);
+
+    const newElement = Array.from(newDom.querySelectorAll('*'));
+    const cureElement = Array.from(this._parentElement.querySelectorAll('*'));
+
+    newElement.forEach((newEl, i) => {
+      const cureEl = cureElement[i];
+
+      // check if the text content is changed and also only the el that has textContent
+      if (
+        !newEl.isEqualNode(cureEl) &&
+        newEl.firstChild.nodeValue.trim() !== ''
+      ) {
+        cureEl.textContent = newEl.textContent;
+      }
+
+      // update the attributes
+      if (!newEl.isEqualNode(cureEl)) {
+        Array.from(newEl.attributes).forEach(attribute =>
+          cureEl.setAttribute(attribute.name, attribute.value)
+        );
+      }
+    });
+  }
+
   renderSpinner() {
     const markup = `
     <div class="spinner">

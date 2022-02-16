@@ -64,7 +64,7 @@ const controlPagination = function (goToPage) {
 const controlServings = function (updateTo) {
   model.updateServings(updateTo);
 
-  recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
 };
 
 const init = function () {
