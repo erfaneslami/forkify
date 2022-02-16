@@ -43,6 +43,10 @@ export const loadRecipe = async function (id) {
     const data = await res.json();
 
     state.recipe = createRecipeObject(data);
+
+    if (state.bookmarks.some(bookmark => bookmark.id === id)) {
+      state.recipe.bookmarked = true;
+    }
   } catch (error) {
     throw error;
   }
