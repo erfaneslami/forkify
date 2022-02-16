@@ -19,6 +19,8 @@ const controlRecipe = async function (id) {
     // RENDER THE SPINNER
     recipeView.renderSpinner();
 
+    resultView.update(model.getSearchResultPage());
+
     // LOAD DATA INTO RECIPE OBJECT
     await model.loadRecipe(id);
 
