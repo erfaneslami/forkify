@@ -19,6 +19,7 @@ export const state = {
     page: 1,
     resultPerPage: RESULT_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 const createRecipeObject = function (data) {
@@ -84,6 +85,15 @@ export const updateServings = function (updateTo) {
     // newQt = oldQt * newServings / oldServings // 2 * 8 / 4 = 4
   });
   state.recipe.servings = updateTo;
+};
+
+export const addBookmark = function (recipe) {
+  //add current recipe to bookmarks array
+  this.state.bookmarks.push(recipe);
+
+  state.recipe.bookmarked = true;
+  console.log(state);
+  console.log(recipe.id === state.recipe.id);
 };
 
 console.log(state);

@@ -30,7 +30,7 @@ export class View {
       // check if the text content is changed and also only the el that has textContent
       if (
         !newEl.isEqualNode(cureEl) &&
-        newEl.firstChild.nodeValue.trim() !== ''
+        newEl.firstChild?.nodeValue.trim() !== ''
       ) {
         cureEl.textContent = newEl.textContent;
       }
