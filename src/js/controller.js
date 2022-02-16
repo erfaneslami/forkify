@@ -19,6 +19,7 @@ const controlRecipe = async function (id) {
     // RENDER THE SPINNER
     recipeView.renderSpinner();
 
+    // update the result view to show the selected recipe
     resultView.update(model.getSearchResultPage());
 
     // LOAD DATA INTO RECIPE OBJECT
@@ -69,7 +70,7 @@ const controlServings = function (updateTo) {
   recipeView.update(model.state.recipe);
 };
 
-const controlBookmark = function () {
+const controlAddBookmark = function () {
   model.addBookmark(model.state.recipe);
 
   recipeView.update(model.state.recipe);
@@ -78,7 +79,7 @@ const controlBookmark = function () {
 const init = function () {
   recipeView.addHandlerRender(controlRecipe);
   recipeView.addHandlerUpdateServings(controlServings);
-  recipeView.addHandlerBookmark(controlBookmark);
+  recipeView.addHandlerBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResult);
   paginationView.addHandlerPagination(controlPagination);
 };
