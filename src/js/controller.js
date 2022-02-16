@@ -9,6 +9,7 @@ import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 import icons from 'url:../img/icons.svg'; // Parcel 2
+import addRecipeView from './views/addRecipeView';
 
 const recipeContainer = document.querySelector('.recipe');
 
@@ -93,6 +94,7 @@ const init = function () {
   recipeView.addHandlerBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResult);
   paginationView.addHandlerPagination(controlPagination);
+  addRecipeView;
 };
 
 init();
