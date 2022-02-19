@@ -1,6 +1,6 @@
 // import { async } from 'regenerator-runtime';
 import { async } from 'regenerator-runtime';
-import { API_URL } from './config';
+import { API_KEY, API_URL } from './config';
 import { TIME_OUT_SEC } from './config';
 import { RESULT_PER_PAGE } from './config';
 import { AJAX } from './helper';
@@ -32,7 +32,7 @@ const createRecipeObject = function (data) {
 
 export const loadRecipe = async function (id) {
   try {
-    const data = await AJAX(`${API_URL}${id}`);
+    const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
     state.recipe = createRecipeObject(data);
 
@@ -41,7 +41,6 @@ export const loadRecipe = async function (id) {
     }
   } catch (error) {
     console.log(error);
-
     throw error;
   }
 };
@@ -50,7 +49,7 @@ export const loadSearchResult = async function (query) {
   try {
     state.search.query = query;
 
-    const data = await AJAX(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${API_KEY}`);
 
     if (data.results === 0) throw new Error();
     state.search.result = data.data.recipes.map(recipe => {
