@@ -5,6 +5,7 @@ import resultView from './views/resultView';
 import paginationView from './views/paginationView';
 import bookmarkView from './views/bookmarkView';
 import addRecipeView from './views/addRecipeView';
+import { MODAL_CLOSE_SEC } from './config';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
@@ -92,9 +93,24 @@ const controlAddRecipe = async function (formData) {
     addRecipeView.renderSpinner();
 
     await model.uploadRecipe(formData);
-    console.log(model.state.recipe);
+
+    recipeView.render(model.state.recipe);
+
+    addRecipeView.renderMessage();
+
+    // Render bookmark view
+    bookmarkView.render(model.state.bookmarks);
+
+    // Change ID in URL
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
+
+    // Close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_SEC * 1000);
   } catch (error) {
     console.log(error);
+    addRecipeView.renderError(error.message);
   }
 };
 
