@@ -1,15 +1,9 @@
 // import { async } from 'regenerator-runtime';
+import { async } from 'regenerator-runtime';
 import { API_URL } from './config';
 import { TIME_OUT_SEC } from './config';
 import { RESULT_PER_PAGE } from './config';
-
-const timeout = function (s) {
-  return new Promise(function (_, reject) {
-    setTimeout(function () {
-      reject(new Error(`Request took too long! Timeout after ${s} second`));
-    }, s * 1000);
-  });
-};
+import { AJAX } from './helper';
 
 export const state = {
   recipe: {},
@@ -38,9 +32,7 @@ const createRecipeObject = function (data) {
 
 export const loadRecipe = async function (id) {
   try {
-    const fetchPromise = fetch(`${API_URL}${id}`);
-    const res = await Promise.race([fetchPromise, timeout(TIME_OUT_SEC)]);
-    const data = await res.json();
+    const data = await AJAX(`${API_URL}${id}`);
 
     state.recipe = createRecipeObject(data);
 
@@ -48,6 +40,8 @@ export const loadRecipe = async function (id) {
       state.recipe.bookmarked = true;
     }
   } catch (error) {
+    console.log(error);
+
     throw error;
   }
 };
@@ -56,9 +50,7 @@ export const loadSearchResult = async function (query) {
   try {
     state.search.query = query;
 
-    const fetchPromise = fetch(`${API_URL}?search=${query}`);
-    const res = await Promise.race([fetchPromise, timeout(TIME_OUT_SEC)]);
-    const data = await res.json();
+    const data = await AJAX(`${API_URL}?search=${query}`);
 
     if (data.results === 0) throw new Error();
     state.search.result = data.data.recipes.map(recipe => {
