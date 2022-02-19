@@ -30,13 +30,10 @@ const controlRecipe = async function (id) {
     // LOAD DATA INTO RECIPE OBJECT
     await model.loadRecipe(id);
 
-    console.log(model.state.recipe);
-
     // SEND LOADED DATA TO VIEW TO RENDER
     recipeView.render(model.state.recipe);
   } catch (error) {
-    recipeView.renderError();
-    console.log(error);
+    recipeView.renderError(error.message);
   }
 };
 
@@ -51,7 +48,6 @@ const controlSearchResult = async function () {
     // get results and store them into state
     await model.loadSearchResult(query);
 
-    console.log(model.state.search.result);
     //render result to view
     resultView.render(model.getSearchResultPage());
 
@@ -110,7 +106,6 @@ const controlAddRecipe = async function (formData) {
       addRecipeView.renderForm();
     }, MODAL_CLOSE_SEC * 1000);
   } catch (error) {
-    console.log(error);
     addRecipeView.renderError(error.message);
   }
 };

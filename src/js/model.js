@@ -35,15 +35,12 @@ export const loadRecipe = async function (id) {
   try {
     const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
-    console.log(data);
-
     state.recipe = createRecipeObject(data);
 
     if (state.bookmarks.some(bookmark => bookmark.id === id)) {
       state.recipe.bookmarked = true;
     }
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -95,8 +92,6 @@ export const addBookmark = function (recipe) {
   state.bookmarks.push(recipe);
 
   state.recipe.bookmarked = true;
-  console.log(state);
-  console.log(recipe.id === state.recipe.id);
 
   persistBookmarks();
 };
@@ -142,7 +137,6 @@ export const uploadRecipe = async function (newRecipe) {
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -152,5 +146,3 @@ const init = function () {
   if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
-
-console.log(state);
