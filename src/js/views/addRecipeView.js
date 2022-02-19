@@ -39,11 +39,11 @@ class addRecipeView extends View {
       handler(data);
     });
   }
-  _generateMarkup() {
-    return `<div class="upload__column">
+  renderForm() {
+    const markup = `<div class="upload__column">
     <h3 class="upload__heading">Recipe data</h3>
     <label>Title</label>
-    <input value="TEST" required name="title" type="text" />
+    <input  required name="title" type="text" />
     <label>URL</label>
     <input  required name="sourceUrl" type="text" />
     <label>Image URL</label>
@@ -106,6 +106,10 @@ class addRecipeView extends View {
     </svg>
     <span>Upload</span>
   </button>`;
+
+    this._parentElement.innerHTML = '';
+
+    this._parentElement.insertAdjacentHTML('afterBegin', markup);
   }
 }
 
